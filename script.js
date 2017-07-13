@@ -13,12 +13,14 @@ var rowCount;
 var cardCount;
 var deck;
 var starRating;
+var startTime;
+var endTime;
 
 var board = document.querySelector('.board');
-var guesses = document.querySelector('.guesses');
+var moves = document.querySelector('.moves');
 var stars = document.querySelectorAll('.feedback img');
 var modal = document.querySelector('.success');
-var results = document.querySelector('.success p');
+var results = document.querySelectorAll('.success p');
 var resetButton = document.querySelector('.success button');
 
 var revealed = [];
@@ -26,8 +28,15 @@ var firstCard;
 var clicks = 0;
 
 
+function gameStart() {
+  populateDeck();
+  placeCards();
+  startTime = new Date().getTime();
+}
+
+
 /**
- * Creates cards and adds them to the deck.
+ * Create cards and add them to the deck.
  */
 function populateDeck() {
   rowCount = 4;
@@ -49,7 +58,7 @@ function populateDeck() {
 
 
 /**
- * Places the cards in rows, then places rows on the board.
+ * Place the cards in rows, then place rows on the board.
  */
 function placeCards() {
   for (var i = 0; i < rowCount; i++) {
@@ -64,7 +73,7 @@ function placeCards() {
 
 
 /**
- * 'Flips' a card and, if another card has been flipped this turn, compares them.
+ * 'Flip' a card and, if another card has been flipped this turn, compare them.
  * @param {button} card - The card element that has been clicked.
  */
 function turnCard(card) {
@@ -79,7 +88,7 @@ function turnCard(card) {
     setTimeout(function () {
       compareCards(firstCard, card);
       disableAll(false);
-      guesses.textContent = 'Moves: ' + (clicks / 2);
+      moves.textContent = 'Moves: ' + (clicks / 2);
       updateStars()
       if (revealed.length === deck.length) {
         gameOver();
@@ -90,7 +99,7 @@ function turnCard(card) {
 
 
 /**
- * Sets the disabled property of all non-revealed cards to a boolean parameter.
+ * Set the disabled property of all non-revealed cards to a boolean parameter.
  * @param {boolean} bool
  */
 function disableAll(bool) {
@@ -103,7 +112,7 @@ function disableAll(bool) {
 
 
 /**
- * Compares two cards. If they match, they are added to the revealed array.
+ * Compare two cards. If they match, add them to the revealed array.
  * @param {button} c1 - The first card.
  * @param {button} c2 - The second card.
  */
@@ -119,21 +128,21 @@ function compareCards(c1, c2) {
 
 
 /**
- * Updates the star rating according to the number of turns taken.
+ * Update the star rating according to the number of turns taken.
  */
 function updateStars() {
   if (clicks/2 === 0) {
-    starRating = 3;
+    starRating = '3 stars';
     for (var i = 0; i < 3; i++) {
       stars[i].src = 'images/solid_star.png';
       stars[i].alt = 'solid star';
     }
   } else if (clicks/2 === 10) {
-    starRating = 2;
+    starRating = '2 stars';
     stars[2].src = 'images/empty_star.png';
     stars[2].alt = 'empty star';
   } else if (clicks/2 === 14) {
-    starRating = 1;
+    starRating = '1 star';
     stars[1].src = 'images/empty_star.png';
     stars[1].alt = 'empty star';
   }
@@ -141,18 +150,32 @@ function updateStars() {
 
 
 /**
- * Displays the game over modal with a reset button.
+ * Display the game over modal with a reset button.
  */
 function gameOver() {
-  results.textContent = 'You finished in ' + clicks/2 + ' moves, ' +
-                        'with a ' + starRating + '-star rating.'
+  endTime = new Date().getTime();
+  var time = calculateTime();
+  results[0].textContent = 'Moves: ' + clicks/2;
+  results[1].textContent = 'Time: ' + time;
+  results[2].textContent = 'Rating: ' + starRating;
   resetButton.addEventListener('click', resetGame);
   modal.style.visibility = 'visible';
 }
 
 
 /**
- * Resets all elements.
+ * Return a string representing the time taken to complete the game.
+ */
+function calculateTime() {
+  var milliseconds = endTime - startTime;
+  var minutes = Math.floor(milliseconds / 1000 / 60);
+  var seconds = Math.floor(milliseconds / 1000 % 60);
+  return minutes + ':' + seconds;
+}
+
+
+/**
+ * Reset all elements.
  */
 function resetGame() {
   modal.style.visibility = 'hidden';
@@ -161,12 +184,10 @@ function resetGame() {
   }
   clicks = 0;
   revealed = [];
-  guesses.textContent = 'Moves: 0';
+  moves.textContent = 'Moves: 0';
   updateStars();
-  populateDeck();
-  placeCards();
+  gameStart();
 }
 
 
-populateDeck();
-placeCards();
+gameStart();
