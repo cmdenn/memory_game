@@ -4,10 +4,14 @@ body {
   margin: 0 auto;
 }
 
+
+/* Header */
 h1 {
   text-align: center;
 }
 
+
+/* Feedback */
 .feedback {
   text-align: center;
   margin: 0 auto;
@@ -28,6 +32,8 @@ h1 {
   width: 15px;
 }
 
+
+/* Board */
 .board {
   background-color: grey;
   border-radius: 8px;
@@ -48,6 +54,8 @@ h1 {
   transition: 0.8s;
 }
 
+
+/* Success Modal */
 .success {
   visibility: hidden;
   position: absolute;
