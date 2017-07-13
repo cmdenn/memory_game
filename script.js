@@ -126,13 +126,16 @@ function updateStars() {
     starRating = 3;
     for (var i = 0; i < 3; i++) {
       stars[i].src = 'images/solid_star.png';
+      stars[i].alt = 'solid star';
     }
   } else if (clicks/2 === 10) {
     starRating = 2;
     stars[2].src = 'images/empty_star.png';
+    stars[2].alt = 'empty star';
   } else if (clicks/2 === 14) {
     starRating = 1;
     stars[1].src = 'images/empty_star.png';
+    stars[1].alt = 'empty star';
   }
 }
 
