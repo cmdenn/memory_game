@@ -1,0 +1,65 @@
+body {
+  font-family: sans-serif;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+}
+
+.feedback {
+  text-align: center;
+  margin: 0 auto;
+  height: 20px;
+  width: 400px;
+}
+
+.guesses {
+  float: left;
+}
+
+.stars {
+  float: right;
+}
+
+.stars img {
+  height: 15px;
+  width: 15px;
+}
+
+.board {
+  background-color: grey;
+  border-radius: 8px;
+  margin: 0 auto;
+  width: 400px;
+  height: 400px;
+  box-shadow: 5px 5px 10px grey;
+}
+
+.row {
+  display: flex;
+}
+
+.card {
+  border-radius: 8px;
+  margin: 3px;  /* 5px on 2x2 */
+  padding: 45px;  /* 93px on 2x2 */
+  transition: 0.8s;
+}
+
+.success {
+  visibility: hidden;
+  position: absolute;
+  text-align: center;
+  background-color: #fff;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  padding-top: 150px;
+}
+
+.reset {
+  padding: 20px;
+}
