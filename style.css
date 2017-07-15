@@ -5,6 +5,23 @@ body {
 }
 
 
+.select {
+  position: absolute;
+  text-align: center;
+  background-color: #fff;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  padding-top: 150px;
+}
+
+
+.select button {
+  padding: 20px;
+}
+
+
 /* Header */
 h1 {
   text-align: center;
@@ -13,13 +30,11 @@ h1 {
 
 /* Feedback */
 .feedback {
-  text-align: center;
-  margin: 0 auto;
   height: 20px;
   width: 400px;
 }
 
-.guesses {
+.moves {
   float: left;
 }
 
@@ -47,7 +62,14 @@ h1 {
   display: flex;
 }
 
-.card {
+.card-4 {
+  border-radius: 8px;
+  margin: 5px;
+  padding: 93px;
+  transition: 0.8s;
+}
+
+.card-16 {
   border-radius: 8px;
   margin: 3px;  /* 5px on 2x2 */
   padding: 45px;  /* 93px on 2x2 */
@@ -68,6 +90,36 @@ h1 {
   padding-top: 150px;
 }
 
+h3 {
+  margin: 0;
+}
+
+.rating {
+  margin: 16px 0 16px;
+}
+
+.rating img {
+  height: 50px;
+  width: 50px;
+}
+
+.rating div {
+  display: inline-flex;
+}
+
+.empty {
+  position: absolute;
+}
+
+.solid-hidden {
+  opacity: 0;
+}
+
+.solid-visible {
+  transition: 0.8s;
+}
+
 .reset {
   padding: 20px;
+  font-weight: bold;
 }
