@@ -6,13 +6,20 @@
     <title>Memory Game</title>
   </head>
   <body>
+    <div class="select">
+      <h2>Select your board size:</h2>
+      <div class="sizes">
+        <button class="small">2 X 2</button>
+        <button class="medium">4 X 4</button>
+      </div>
+    </div>
     <div class="header">
       <h1>Memory Game</h1>
     </div>
     <div class="feedback">
       <div class="moves">Moves: 0</div>
       <div class="stars">
-        <img src="images/solid_star.png" alt="solid_star">
+        <img src="images/solid_star.png" alt="solid star">
         <img src="images/solid_star.png" alt="solid star">
         <img src="images/solid_star.png" alt="solid star">
       </div>
@@ -20,9 +27,22 @@
     <div class="board"></div>
     <div class="success">
       <h2>Success! You won the game!</h2>
-      <p>Moves</p>
-      <p>Time</p>
-      <p>Rating</p>
+      <h3>Moves</h3>
+      <h3>Time</h3>
+      <div class="rating">
+        <div class="first-star">
+          <img src="images/empty_star.png" alt="empty star" class="empty">
+          <img src="images/solid_star.png" alt="solid star" class="solid-hidden">
+        </div>
+        <div class="second-star">
+          <img src="images/empty_star.png" alt="empty star" class="empty">
+          <img src="images/solid_star.png" alt="solid star" class="solid-hidden">
+        </div>
+        <div class="third-star">
+          <img src="images/empty_star.png" alt="empty star" class="empty">
+          <img src="images/solid_star.png" alt="solid star" class="solid-hidden">
+        </div>
+      </div>
       <button class="reset">Play Again</button>
     </div>
   </body>
