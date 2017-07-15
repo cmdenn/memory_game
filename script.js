@@ -16,11 +16,15 @@ var starRating;
 var startTime;
 var endTime;
 
+var select = document.querySelector('.select');
+var small = document.querySelector('.small');
+var medium = document.querySelector('.medium');
 var board = document.querySelector('.board');
 var moves = document.querySelector('.moves');
 var stars = document.querySelectorAll('.feedback img');
 var modal = document.querySelector('.success');
-var results = document.querySelectorAll('.success p');
+var results = document.querySelectorAll('.success h3');
+var rating = document.querySelectorAll('.success .solid-hidden');
 var resetButton = document.querySelector('.success button');
 
 var revealed = [];
@@ -28,9 +32,15 @@ var firstCard;
 var clicks = 0;
 
 
+function getSelection() {
+  select.style.visibility = 'visible';
+}
+
+
 function gameStart() {
   populateDeck();
   placeCards();
+  updateStars();
   startTime = new Date().getTime();
 }
 
@@ -39,13 +49,12 @@ function gameStart() {
  * Create cards and add them to the deck.
  */
 function populateDeck() {
-  rowCount = 4;
-  cardCount = rowCount*rowCount;
+  cardCount = rowCount * rowCount;
   deck = []
   var colorSelection = colors.slice(0, cardCount/2).concat(colors.slice(0, cardCount/2));
   for (let i = 0; i < cardCount; i++) {
     var newCard = document.createElement('button');
-    newCard.className = 'card';
+    newCard.className = 'card-' + cardCount;
     colorIndex = Math.floor(Math.random() * colorSelection.length);
     newCard.name = colorSelection[colorIndex];
     colorSelection.splice(colorIndex, 1);
@@ -132,17 +141,17 @@ function compareCards(c1, c2) {
  */
 function updateStars() {
   if (clicks/2 === 0) {
-    starRating = '3 stars';
+    starRating = 3;
     for (var i = 0; i < 3; i++) {
       stars[i].src = 'images/solid_star.png';
       stars[i].alt = 'solid star';
     }
-  } else if (clicks/2 === 10) {
-    starRating = '2 stars';
+  } else if (clicks/2 === (cardCount/2) + (rowCount/2)) {
+    starRating = 2;
     stars[2].src = 'images/empty_star.png';
     stars[2].alt = 'empty star';
-  } else if (clicks/2 === 14) {
-    starRating = '1 star';
+  } else if (clicks/2 === (cardCount/2) + (rowCount/2) + (cardCount/4)) {
+    starRating = 1;
     stars[1].src = 'images/empty_star.png';
     stars[1].alt = 'empty star';
   }
@@ -153,13 +162,14 @@ function updateStars() {
  * Display the game over modal with a reset button.
  */
 function gameOver() {
-  endTime = new Date().getTime();
   var time = calculateTime();
   results[0].textContent = 'Moves: ' + clicks/2;
   results[1].textContent = 'Time: ' + time;
-  results[2].textContent = 'Rating: ' + starRating;
   resetButton.addEventListener('click', resetGame);
   modal.style.visibility = 'visible';
+  for (var i = 0; i < starRating; i++) {
+    rating[i].className = 'solid-visible';
+  }
 }
 
 
@@ -167,9 +177,13 @@ function gameOver() {
  * Return a string representing the time taken to complete the game.
  */
 function calculateTime() {
+  endTime = new Date().getTime();
   var milliseconds = endTime - startTime;
   var minutes = Math.floor(milliseconds / 1000 / 60);
   var seconds = Math.floor(milliseconds / 1000 % 60);
+  if (seconds < 10) {
+    seconds = '0' + seconds;
+  }
   return minutes + ':' + seconds;
 }
 
@@ -178,6 +192,9 @@ function calculateTime() {
  * Reset all elements.
  */
 function resetGame() {
+  for (var i = 0; i < starRating; i++) {
+    rating[i].className = 'solid-hidden';
+  }
   modal.style.visibility = 'hidden';
   while(board.firstChild) {
     board.removeChild(board.firstChild);
@@ -185,9 +202,17 @@ function resetGame() {
   clicks = 0;
   revealed = [];
   moves.textContent = 'Moves: 0';
-  updateStars();
-  gameStart();
+  getSelection();
 }
 
 
-gameStart();
+small.addEventListener('click', function() {
+  rowCount = 2;
+  select.style.visibility = 'hidden';
+  gameStart();
+})
+medium.addEventListener('click', function() {
+  rowCount = 4;
+  select.style.visibility = 'hidden';
+  gameStart();
+})
