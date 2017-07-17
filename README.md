@@ -15,4 +15,4 @@ ends when all cards are revealed.
 ## Rating System
 
 Players start with a three-star rating. They lose one star after ten moves, and
-another after fourteen moves.
+another after fourteen moves (three and four moves, respectively, when playing on the small board).
