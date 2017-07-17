@@ -15,6 +15,9 @@ var deck;
 var starRating;
 var startTime;
 var endTime;
+var firstCard;
+var revealed;
+var clicks;
 
 var select = document.querySelector('.select');
 var small = document.querySelector('.small');
@@ -27,17 +30,13 @@ var results = document.querySelectorAll('.success h3');
 var rating = document.querySelectorAll('.success .solid-hidden');
 var resetButton = document.querySelector('.success button');
 
-var revealed = [];
-var firstCard;
-var clicks = 0;
 
-
-function getSelection() {
-  select.style.visibility = 'visible';
-}
-
-
+/**
+ * Start the game.
+ */
 function gameStart() {
+  clicks = 0;
+  revealed = [];
   populateDeck();
   placeCards();
   updateStars();
@@ -165,7 +164,6 @@ function gameOver() {
   var time = calculateTime();
   results[0].textContent = 'Moves: ' + clicks/2;
   results[1].textContent = 'Time: ' + time;
-  resetButton.addEventListener('click', resetGame);
   modal.style.visibility = 'visible';
   for (var i = 0; i < starRating; i++) {
     rating[i].className = 'solid-visible';
@@ -181,9 +179,7 @@ function calculateTime() {
   var milliseconds = endTime - startTime;
   var minutes = Math.floor(milliseconds / 1000 / 60);
   var seconds = Math.floor(milliseconds / 1000 % 60);
-  if (seconds < 10) {
-    seconds = '0' + seconds;
-  }
+  seconds = seconds < 10 ? '0' + seconds : seconds
   return minutes + ':' + seconds;
 }
 
@@ -192,20 +188,19 @@ function calculateTime() {
  * Reset all elements.
  */
 function resetGame() {
-  for (var i = 0; i < starRating; i++) {
-    rating[i].className = 'solid-hidden';
-  }
-  modal.style.visibility = 'hidden';
   while(board.firstChild) {
     board.removeChild(board.firstChild);
   }
-  clicks = 0;
-  revealed = [];
   moves.textContent = 'Moves: 0';
-  getSelection();
+  modal.style.visibility = 'hidden';
+  for (var i = 0; i < starRating; i++) {
+    rating[i].className = 'solid-hidden';
+  }
+  select.style.visibility = 'visible';
 }
 
 
+resetButton.addEventListener('click', resetGame);
 small.addEventListener('click', function() {
   rowCount = 2;
   select.style.visibility = 'hidden';
