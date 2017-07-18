@@ -20,6 +20,7 @@ var revealed;
 var clicks;
 
 var select = document.querySelector('.select');
+var welcome = document.querySelector('.select h1');
 var small = document.querySelector('.small');
 var medium = document.querySelector('.medium');
 var board = document.querySelector('.board');
@@ -196,6 +197,7 @@ function resetGame() {
   for (var i = 0; i < starRating; i++) {
     rating[i].className = 'solid-hidden';
   }
+  welcome.textContent = '';
   select.style.visibility = 'visible';
 }
 
